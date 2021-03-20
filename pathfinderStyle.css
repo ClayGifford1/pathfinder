@@ -32,3 +32,11 @@ td {
 .cell {
   background-color: white;
 }
+
+.base {
+  background-color: black;
+}
+
+.target {
+  background-color: yellow;
+}

@@ -10,7 +10,16 @@ export default class Node {
 
   displayNode() {
     const newNode = document.createElement("td");
-    newNode.className = "cell";
+
+    if (this.isBase) {
+      newNode.className = "base";
+    }
+    else if (this.isTarget) {
+      newNode.className = "target";
+    }
+    else {
+      newNode.className = "cell";
+    }
     newNode.id = `r${this.row}c${this.cell}`;
 
     const text = document.createTextNode("");

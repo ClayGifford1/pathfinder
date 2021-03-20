@@ -9,12 +9,6 @@ const infoHeight = info.offsetHeight;
 
 
 const generateGrid = () => {
-  const sizes = calculateGridSize();
-  const rows = Math.floor((sizes.height - navHeight - infoHeight) / 28);
-  const cells = Math.floor(sizes.width / 25);
-
-  const grid = new Map(rows, cells);
-
   for (let x = 0; x < rows; x++) {
     var nodes = [];
     var row = document.createElement("tr");
@@ -22,10 +16,10 @@ const generateGrid = () => {
     for (let y = 0; y < cells; y++) {
       var node = new Node(x, y);
 
-      if (x === Math.floor(x / 2) && y === Math.floor(y / 4)) {
+      if (x === Math.floor(rows / 2) && y === Math.floor(cells / 4)) {
         node.isBase = true;
       }
-      else if (x === Math.floor(x / 2) && y === Math.floor(y / 4 * 3)) {
+      else if (x === Math.floor(rows / 2) && y === Math.floor(cells / 4 * 3)) {
         node.isTarget = true;
       }
 
@@ -43,7 +37,7 @@ const clearGrid = () => {
   while(grid.hasChildNodes()) {
     grid.removeChild(grid.firstChild);
   }
-  Map.clear();
+  grid.clear();
 }
 
 const calculateGridSize = () => {
@@ -53,12 +47,17 @@ const calculateGridSize = () => {
   return sizes;
 }
 
-const getRows = (dimensions) => {
+const calculateRows = (dimensions) => {
   return Math.floor((dimensions.height - navHeight - infoHeight) / 28);
 }
 
-const getCells = (dimensions) => {
+const calculateCells = (dimensions) => {
   return Math.floor(dimensions.width / 25);
 }
 
+
+const dimensions = calculateGridSize();
+const rows = calculateRows(dimensions);
+const cells = calculateCells(dimensions);
+const grid = new Map(rows, cells);
 generateGrid();

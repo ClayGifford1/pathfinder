@@ -8,7 +8,7 @@ export default class Node {
     this.isVisited = false;
   }
 
-  createNode() {
+  displayNode() {
     const newNode = document.createElement("td");
     newNode.className = "cell";
     newNode.id = `r${this.row}c${this.cell}`;

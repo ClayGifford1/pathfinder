@@ -2,6 +2,9 @@ export default class Node {
   constructor(row, cell) {
     this.row = row;
     this.cell = cell;
+    this.previousNode = null;
+    this.distance = Infinity;
+    this.weight = 1;
     this.isBase = false;
     this.isTarget = false;
     this.isObstacle = false;
@@ -26,5 +29,9 @@ export default class Node {
     newNode.appendChild(text);
 
     return newNode;
+  }
+
+  getIndex() {
+    return ((this.row + 1) * cell + 1);
   }
 }

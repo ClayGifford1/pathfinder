@@ -1,5 +1,6 @@
 import Node from "./cell.js";
 import Map from "./map.js";
+// import dijkstra from "./dijkstra.js"
 
 const graph = document.getElementById("graph");
 const nav = document.getElementById("navigation");

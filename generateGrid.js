@@ -1,6 +1,6 @@
 import Node from "./cell.js";
 import Map from "./map.js";
-// import dijkstra from "./dijkstra.js"
+import Dijkstra from "./dijkstra.js";
 
 const graph = document.getElementById("graph");
 const nav = document.getElementById("navigation");
@@ -15,7 +15,7 @@ const generateGrid = () => {
     var row = document.createElement("tr");
 
     for (let y = 0; y < cells; y++) {
-      var node = new Node(x, y);
+      var node = new Node(x, y, cells);
 
       if (x === Math.floor(rows / 2) && y === Math.floor(cells / 4)) {
         node.isBase = true;
@@ -31,7 +31,7 @@ const generateGrid = () => {
     graph.appendChild(row);
     grid.graph.push(nodes);
   }
-}
+};
 
 const clearGrid = () => {
   const grid = document.getElementById("graph");
@@ -39,26 +39,29 @@ const clearGrid = () => {
     grid.removeChild(grid.firstChild);
   }
   grid.clear();
-}
+};
 
 const calculateGridSize = () => {
   const sizes = {
     height: window.innerHeight,
     width: window.innerWidth };
   return sizes;
-}
+};
 
 const calculateRows = (dimensions) => {
   return Math.floor((dimensions.height - navHeight - infoHeight) / 28);
-}
+};
 
 const calculateCells = (dimensions) => {
   return Math.floor(dimensions.width / 25);
-}
-
+};
 
 const dimensions = calculateGridSize();
 const rows = calculateRows(dimensions);
 const cells = calculateCells(dimensions);
 const grid = new Map(rows, cells);
 generateGrid();
+grid.getNeighbors();
+let testRun = new Dijkstra(grid);
+testRun.runDijkstra();
+// testRun.printPath();

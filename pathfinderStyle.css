@@ -40,3 +40,7 @@ td {
 .target {
   background-color: yellow;
 }
+
+.searched {
+  background-color: blue;
+}

@@ -1,7 +1,8 @@
 export default class Node {
-  constructor(row, cell) {
+  constructor(row, cell, cells) {
     this.row = row;
     this.cell = cell;
+    this.cells = cells;
     this.previousNode = null;
     this.distance = Infinity;
     this.weight = 1;
@@ -9,6 +10,7 @@ export default class Node {
     this.isTarget = false;
     this.isObstacle = false;
     this.isVisited = false;
+    this.neighbors = [];
   }
 
   displayNode() {
@@ -32,6 +34,6 @@ export default class Node {
   }
 
   getIndex() {
-    return ((this.row + 1) * cell + 1);
+    return ((this.row * this.cells) + this.cell + 1);
   }
 }

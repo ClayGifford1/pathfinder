@@ -60,6 +60,19 @@ export default function Dijkstra(grid) {
   };
 
   Dijkstra.prototype.animatePath = function(htmlClass, iterations) {
+
+    if (iterations === 1) {
+      let targetNode = this.target;
+
+      while(targetNode.previousNode != null) {
+        let cell = document.getElementById(targetNode.id);
+        if(!targetNode.isTarget) {
+          cell.className = "path";
+        }
+        targetNode = targetNode.previousNode;
+      }
+    }
+
     if (iterations < 1) return;
 
     // let pathArray = this.nodePath;
@@ -67,8 +80,11 @@ export default function Dijkstra(grid) {
     setTimeout(function(obj) {
       let node = obj.nodePath.shift();
       // let node = pathArray.shift();
-      let cell = document.getElementById(node.id);
-      cell.className = htmlClass;
+
+      if (!node.isBase && !node.isTarget) {
+        let cell = document.getElementById(node.id);
+        cell.className = htmlClass;
+      }
 
       obj.animatePath(htmlClass, --iterations);
 

@@ -38,7 +38,7 @@ td {
 }
 
 .target {
-  background-color: yellow;
+  background-color: black;
 }
 
 .searched {
@@ -46,5 +46,5 @@ td {
 }
 
 .path {
-  background-color: pink;
+  background-color: yellow;
 }

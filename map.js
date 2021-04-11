@@ -3,9 +3,12 @@ export default class Map {
     this.rows = rows;
     this.cells = cells;
     this.graph = [];
-    this.cellNeighbors = 8;
-    this.possibleNeighborRowAdjustment = [1, 1, 0, -1, -1, -1, 0, 1];
-    this.possibleNeighborCellAdjustment = [0, 1, 1, 1, 0, -1, -1, -1];
+    // this.cellNeighbors = 8;
+    this.cellNeighbors = 4;
+    // this.possibleNeighborRowAdjustment = [1, 1, 0, -1, -1, -1, 0, 1];
+    // this.possibleNeighborCellAdjustment = [0, 1, 1, 1, 0, -1, -1, -1];
+    this.possibleNeighborRowAdjustment = [1, 0, -1, 0];
+    this.possibleNeighborCellAdjustment = [0, 1, 0, -1];
   }
 
   clear() {

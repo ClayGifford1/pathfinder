@@ -11,6 +11,7 @@ export default class Node {
     this.isObstacle = false;
     this.isVisited = false;
     this.neighbors = [];
+    this.id = `r${row}c${cell}`;
   }
 
   displayNode() {
@@ -25,7 +26,7 @@ export default class Node {
     else {
       newNode.className = "cell";
     }
-    newNode.id = `r${this.row}c${this.cell}`;
+    newNode.id = this.id;
 
     const text = document.createTextNode("");
     newNode.appendChild(text);

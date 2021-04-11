@@ -38,7 +38,6 @@ MinHeap.prototype.insert = function(node) {
   };
 
   MinHeap.prototype.heapify = function(index) {
-    // if (index === 885) {console.log(this.heap[index].distance);}
 
     let leftIndex = leftChild(index);
     let rightIndex = rightChild(index);
@@ -48,16 +47,6 @@ MinHeap.prototype.insert = function(node) {
     if (reposition != 0) {
       if (parentIndex >= 0 && this.heap[reposition].distance < this.heap[parentIndex].distance) {
         reposition = parentIndex;
-        /* if (index === 885) {console.log("new index " + parentIndex);}
-        if (index === 442) {console.log("new index " + parentIndex);}
-        if (index === 220) {console.log("new index " + parentIndex);}
-        if (index === 109) {console.log("new index " + parentIndex);}
-        if (index === 54) {console.log("new index " + parentIndex);}
-        if (index === 26) {console.log("new index " + parentIndex);}
-        if (index === 12) {console.log("new index " + parentIndex);}
-        if (index === 5) {console.log("new index " + parentIndex);}
-        if (index === 2) {console.log("new index " + parentIndex);}
-        if (index === 0) {console.log("new index " + parentIndex);} */
       }
     }
     if (leftIndex < this.heap.length && this.heap[reposition].distance > this.heap[leftIndex].distance) {
@@ -72,22 +61,17 @@ MinHeap.prototype.insert = function(node) {
       this.swap(reposition, index);
       this.heapify(reposition);
     }
-    if (reposition === index) {
-      //console.log("done checking");
-    }
+    //if (reposition === index) {
+    //}
   };
 
   MinHeap.prototype.setDistance = function(index, distance) {
     let heapIndex = 0;
 
-    //console.log(index);
-
     for (let n = 0; n < this.heap.length; n++) {
       if (this.heap[n].getIndex() === index) {
         this.heap[n].distance = distance;
-        //console.log(this.heap[n].distance);
         heapIndex = n;
-        //console.log(heapIndex + "heap index" + this.heap[n].getIndex());
       }
     }
     this.heapify(heapIndex);

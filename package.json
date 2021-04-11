@@ -1,0 +1,19 @@
+{
+  "name": "pathfinder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cell.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClayGifford1/pathfinder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ClayGifford1/pathfinder/issues"
+  },
+  "homepage": "https://github.com/ClayGifford1/pathfinder#readme"
+}

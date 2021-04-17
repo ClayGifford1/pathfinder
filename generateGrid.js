@@ -33,6 +33,16 @@ const generateGrid = () => {
   }
 };
 
+const activateDijkstra = () => {
+  let testRun = new Dijkstra(grid);
+  testRun.runDijkstra();
+};
+
+const initializeEventListeners = () => {
+  document.getElementById("Dijkstra Search").addEventListener("click", activateDijkstra);
+  document.getElementById("graph").addEventListener("mousedown", function(){grid.mousePressed = true;});
+};
+
 const clearGrid = () => {
   const grid = document.getElementById("graph");
   while(grid.hasChildNodes()) {
@@ -61,7 +71,7 @@ const rows = calculateRows(dimensions);
 const cells = calculateCells(dimensions);
 const grid = new Map(rows, cells);
 generateGrid();
+initializeEventListeners();
 grid.getNeighbors();
-let testRun = new Dijkstra(grid);
-testRun.runDijkstra();
-// testRun.printPath();
+//let testRun = new Dijkstra(grid);
+//testRun.runDijkstra();

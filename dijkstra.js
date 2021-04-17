@@ -13,9 +13,9 @@ export default function Dijkstra(grid) {
       for (let y = 0; y < grid.cells; y++) {
         if (grid.graph[x][y].isBase) {
           grid.graph[x][y].distance = 0;
-          //this.nextUp.insert(grid.graph[x][y]);
+          this.nextUp.insert(grid.graph[x][y]);
         }
-        this.nextUp.insert(grid.graph[x][y]);
+        //this.nextUp.insert(grid.graph[x][y]);
       }
     }
 
@@ -24,15 +24,11 @@ export default function Dijkstra(grid) {
     while(!this.reachedTarget && this.nextUp.heap.length != 0) {
       let current = this.nextUp.extractMin();
       this.nodePath.push(current);
-      //this.animatePath(current, "searched");
-      //setTimeout(() => {document.getElementById(`r${current.row}c${current.cell}`).className = "searched";}, 1000);
       console.log(`${current.row}-${current.cell}`);
 
       if (current.isTarget) {
         this.reachedTarget = true;
         this.target = current;
-        // let previous = current.previousNode;
-        //document.getElementById(`r${previous.row}c${previous.cell}`).className = "path";
         break;
       }
 
@@ -42,7 +38,7 @@ export default function Dijkstra(grid) {
           if (temp < current.neighbors[n].distance) {
             current.neighbors[n].distance = temp;
             current.neighbors[n].previousNode = current;
-            //this.nextUp.insert(current.neighbors[n]);
+            this.nextUp.insert(current.neighbors[n]);
             this.nextUp.setDistance(current.neighbors[n].getIndex(), current.neighbors[n].distance);
           }
         }
@@ -88,7 +84,7 @@ export default function Dijkstra(grid) {
 
       obj.animatePath(htmlClass, --iterations);
 
-    }, 10, this);
+    }, 5, this);
   };
 /*
   Dijkstra.prototype.printPath = function() {

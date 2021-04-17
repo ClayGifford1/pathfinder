@@ -3,6 +3,7 @@ export default class Map {
     this.rows = rows;
     this.cells = cells;
     this.graph = [];
+    this.mousePressed = false;
     // this.cellNeighbors = 8;
     this.cellNeighbors = 4;
     // this.possibleNeighborRowAdjustment = [1, 1, 0, -1, -1, -1, 0, 1];

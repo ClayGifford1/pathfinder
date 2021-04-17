@@ -48,3 +48,7 @@ td {
 .path {
   background-color: yellow;
 }
+
+.pressed {
+  background-color: pink;
+}

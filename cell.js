@@ -31,6 +31,8 @@ export default class Node {
     const text = document.createTextNode("");
     newNode.appendChild(text);
 
+    newNode.addEventListener("mousedown", function() {newNode.className = "pressed";});
+
     return newNode;
   }
 

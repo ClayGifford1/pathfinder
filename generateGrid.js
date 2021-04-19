@@ -1,54 +1,44 @@
-import Node from "./cell.js";
 import Map from "./map.js";
 import Dijkstra from "./dijkstra.js";
 
-const graph = document.getElementById("graph");
 const nav = document.getElementById("navigation");
 const info = document.getElementById("info");
 const navHeight = nav.offsetHeight;
 const infoHeight = info.offsetHeight;
 
-
 const generateGrid = () => {
-  for (let x = 0; x < rows; x++) {
-    var nodes = [];
-    var row = document.createElement("tr");
-
-    for (let y = 0; y < cells; y++) {
-      var node = new Node(x, y, cells);
-
-      if (x === Math.floor(rows / 2) && y === Math.floor(cells / 4)) {
-        node.isBase = true;
-      }
-      else if (x === Math.floor(rows / 2) && y === Math.floor(cells / 4 * 3)) {
-        node.isTarget = true;
-      }
-
-      nodes.push(node);
-      var cell = node.displayNode();
-      row.appendChild(cell);
-    }
-    graph.appendChild(row);
-    grid.graph.push(nodes);
-  }
-};
-
-const activateDijkstra = () => {
-  let testRun = new Dijkstra(grid);
-  testRun.runDijkstra();
+  grid.buildGrid();
 };
 
 const initializeEventListeners = () => {
-  document.getElementById("Dijkstra Search").addEventListener("click", activateDijkstra);
-  document.getElementById("graph").addEventListener("mousedown", function(){grid.mousePressed = true;});
+  document.getElementById("Dijkstra search").addEventListener("click", activateDijkstra);
+  document.getElementById("reset").addEventListener("click", resetGrid);
+  window.addEventListener("resize", resetGrid);
 };
 
-const clearGrid = () => {
-  const grid = document.getElementById("graph");
-  while(grid.hasChildNodes()) {
-    grid.removeChild(grid.firstChild);
+const generateMouseEvents = () => {
+  for (let x = 0; x < grid.rows; x++) {
+    for (let y = 0; y < grid.cells; y++) {
+      //let nodeID = grid.graph[x][y].id;
+      //let node = document.getElementById(nodeID);
+      //node.addEventListener("mouseenter", )
+    }
   }
+  grid.grid.addEventListener("mousedown", handleMouseEnterGrid);
+};
+
+const handleMouseEnterGrid = () => {
+  //grid.mousePressed = true;
+  grid.mousePressed = true;
+};
+
+const resetGrid = () => {
+  /*
   grid.clear();
+  generateGrid();
+  generateMouseEvents();
+  */
+  window.location.reload(false);
 };
 
 const calculateGridSize = () => {
@@ -59,11 +49,16 @@ const calculateGridSize = () => {
 };
 
 const calculateRows = (dimensions) => {
-  return Math.floor((dimensions.height - navHeight - infoHeight) / 28);
+  return Math.floor((dimensions.height - navHeight - infoHeight - 100) / 25);
 };
 
 const calculateCells = (dimensions) => {
   return Math.floor(dimensions.width / 25);
+};
+
+const activateDijkstra = () => {
+  let testRun = new Dijkstra(grid);
+  testRun.runDijkstra();
 };
 
 const dimensions = calculateGridSize();
@@ -72,6 +67,5 @@ const cells = calculateCells(dimensions);
 const grid = new Map(rows, cells);
 generateGrid();
 initializeEventListeners();
+generateMouseEvents();
 grid.getNeighbors();
-//let testRun = new Dijkstra(grid);
-//testRun.runDijkstra();

@@ -1,22 +1,18 @@
+body {
+  padding-top: 70px;
+}
+
 #navigation {
-  height: auto;
   width: 100%;
 }
 
 #info {
-  height: 300px;
+  height: auto;
   width: 100%;
-  border: 1px solid black;
+  padding-bottom: 10px;
 }
 
-#playground {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  border: 2px solid black;
-}
-
-#graph {
+#grid {
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;

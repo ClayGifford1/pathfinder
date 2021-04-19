@@ -26,7 +26,7 @@
             Algorithms
             </a>
             <div class="dropdown-menu">
-              <a id="Dijkstra Search" class="dropdown-item" href="#">Dijkstra Search</a>
+              <a id="Dijkstra search" class="dropdown-item" href="#">Dijkstra Search</a>
             </div>
           </li>
         </ul>
@@ -34,24 +34,18 @@
     </div>
   </div>
 
-    <div id="info" class="container-fluid">
-      <div class="row">
-      </div>
-    </div>
-
-  <div class="container-fluid" id="playground">
-    <div class="row">
-      <table id="graph">
-      </table>
+  <div id="info" class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+      <button id="reset" type="button" class="btn btn-primary">Reset</button>
     </div>
   </div>
 
-  <script>
-    window.onresize = function() {
-      clearGrid();
-      generateGrid();
-    }
-  </script>
+  <div class="container-fluid">
+    <div class="row">
+      <table id="grid">
+      </table>
+    </div>
+  </div>
 
   <!-- Grid generator script -->
   <script type="module" src="generateGrid.js"></script>

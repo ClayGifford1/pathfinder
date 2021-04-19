@@ -31,12 +31,17 @@ export default class Node {
     const text = document.createTextNode("");
     newNode.appendChild(text);
 
-    newNode.addEventListener("mousedown", function() {newNode.className = "pressed";});
+    //newNode.addEventListener("mousedown", this.handleMouseDown);
+    //newNode.addEventListener("mouseenter", this.handleMouseDown);
 
     return newNode;
   }
 
   getIndex() {
     return ((this.row * this.cells) + this.cell + 1);
+  }
+
+  handleMouseDown() {
+    document.getElementById(this.id).className = "pressed";
   }
 }

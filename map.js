@@ -1,4 +1,5 @@
 import Node from "./cell.js";
+import Dijkstra from "./dijkstra.js";
 
 export default class Map {
   constructor(rows, cells) {
@@ -37,6 +38,7 @@ export default class Map {
       this.grid.appendChild(row);
       this.graph.push(nodes);
     }
+    this.getNeighbors();
   }
 
   clear() {

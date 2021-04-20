@@ -5,6 +5,9 @@ const nav = document.getElementById("navigation");
 const info = document.getElementById("info");
 const navHeight = nav.offsetHeight;
 const infoHeight = info.offsetHeight;
+//var mousePressed = false;
+var baseCellMoving = false;
+var targetCellMoving = false;
 
 const generateGrid = () => {
   grid.buildGrid();
@@ -17,19 +20,104 @@ const initializeEventListeners = () => {
 };
 
 const generateMouseEvents = () => {
+
   for (let x = 0; x < grid.rows; x++) {
     for (let y = 0; y < grid.cells; y++) {
-      //let nodeID = grid.graph[x][y].id;
-      //let node = document.getElementById(nodeID);
-      //node.addEventListener("mouseenter", )
+
+      let nodeID = grid.graph[x][y].id;
+      let node = document.getElementById(nodeID);
+
+      node.addEventListener("mouseenter", function() {
+
+        let status = mouseDownStatus();
+        if (status) {
+
+          if (baseCellMoving) {
+            this.className = "base";
+          }
+          if (targetCellMoving) {
+            this.className = "target";
+          }
+          if (!baseCellMoving && !targetCellMoving) {
+            if (!checkBaseCell(x, y) && !checkTargetCell(x, y)) {
+              this.className = "pressed";
+            }
+          }
+        }
+      });
+
+      node.addEventListener("mouseleave", function() {
+
+        let status = mouseDownStatus();
+        if (status) {
+
+          if (baseCellMoving || targetCellMoving) {
+            this.className = "cell";
+            if (checkBaseCell(x, y)) {
+              grid.graph[x][y].isBase = false;
+            }
+            if (checkTargetCell(x, y)) {
+              grid.graph[x][y].isTarget = false;
+            }
+          }
+        }
+      });
+
+      node.addEventListener("mousedown", function() {
+
+        if (checkBaseCell(x, y)) {
+          baseCellMoving = true;
+        }
+        if (checkTargetCell(x, y)) {
+          targetCellMoving = true;
+        }
+        if (!baseCellMoving && !targetCellMoving) {
+          this.className = "pressed";
+        }
+      });
+
+      node.addEventListener("mouseup", function() {
+
+        let status = mouseDownStatus();
+        if (status) {
+
+          if (baseCellMoving) {
+            grid.graph[x][y].isBase = true;
+            this.className = "base";
+            baseCellMoving = false;
+          }
+          if (targetCellMoving) {
+            grid.graph[x][y].isTarget = true;
+            this.className = "target";
+            targetCellMoving = false;
+          }
+        }
+      });
     }
   }
-  grid.grid.addEventListener("mousedown", handleMouseEnterGrid);
+  grid.grid.addEventListener("mousedown", handleMouseDownGrid);
+  grid.grid.addEventListener("mouseup", handleMouseUpGrid);
 };
 
-const handleMouseEnterGrid = () => {
-  //grid.mousePressed = true;
+const mouseDownStatus = () => {
+  return grid.mousePressed;
+};
+
+const checkBaseCell = (x, y) => {
+  return grid.graph[x][y].isBase;
+};
+
+const checkTargetCell = (x, y) => {
+  return grid.graph[x][y].isTarget;
+};
+
+const handleMouseDownGrid = () => {
   grid.mousePressed = true;
+  //mousePressed = true;
+};
+
+const handleMouseUpGrid = () => {
+  grid.mousePressed = false;
 };
 
 const resetGrid = () => {
@@ -68,4 +156,4 @@ const grid = new Map(rows, cells);
 generateGrid();
 initializeEventListeners();
 generateMouseEvents();
-grid.getNeighbors();
+// grid.getNeighbors();

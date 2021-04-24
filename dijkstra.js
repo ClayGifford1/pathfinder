@@ -24,7 +24,7 @@ export default function Dijkstra(grid) {
     while(!this.reachedTarget && this.nextUp.heap.length != 0) {
       let current = this.nextUp.extractMin();
       this.nodePath.push(current);
-      console.log(`${current.row}-${current.cell}`);
+      //console.log(`${current.row}-${current.cell}`);
 
       if (current.isTarget) {
         this.reachedTarget = true;

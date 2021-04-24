@@ -1,5 +1,4 @@
 import Node from "./cell.js";
-import Dijkstra from "./dijkstra.js";
 
 export default class Map {
   constructor(rows, cells) {

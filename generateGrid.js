@@ -153,6 +153,7 @@ const dimensions = calculateGridSize();
 const rows = calculateRows(dimensions);
 const cells = calculateCells(dimensions);
 const grid = new Map(rows, cells);
+
 generateGrid();
 initializeEventListeners();
 generateMouseEvents();

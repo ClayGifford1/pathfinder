@@ -1,30 +1,28 @@
 import minHeap from "./minHeap.js";
+import manhattan from "./manhattan.js";
 
-export default function Dijkstra(grid) {
+export default function Astar(grid) {
 
   this.nextUp = new minHeap();
-  this.reachedTarget = false;
-  this.target = null;
   this.nodePath = [];
+  this.target = null;
+  this.reachedTarget = false;
 
-  Dijkstra.prototype.runDijkstra = function() {
+  Astar.prototype.runAstar = function() {
 
     for (let x = 0; x < grid.rows; x++) {
       for (let y = 0; y < grid.cells; y++) {
         if (grid.graph[x][y].isBase) {
           grid.graph[x][y].distance = 0;
-          // this.nextUp.insert(grid.graph[x][y]);
+          this.nextUp.insert(grid.graph[x][y]);
         }
-        this.nextUp.insert(grid.graph[x][y]);
+        //this.nextUp.insert(grid.graph[x][y]);
       }
     }
 
-    console.log(`${grid.rows}-${grid.cells}`);
-
-    while(!this.reachedTarget && this.nextUp.heap.length != 0) {
+    while(this.nextUp.heap.length != 0 && !this.reachedTarget) {
       let current = this.nextUp.extractMin();
       this.nodePath.push(current);
-      //console.log(`${current.row}-${current.cell}`);
 
       if (current.isTarget) {
         this.reachedTarget = true;
@@ -34,11 +32,11 @@ export default function Dijkstra(grid) {
 
       if (current.neighbors.length != 0) {
         for (let n = 0; n < current.neighbors.length; n++) {
-          let temp = current.distance + current.neighbors[n].weight;
+          let temp = current.distance + current.neighbors[n].weight + manhattan(current.neighbors[n], grid);
           if (temp < current.neighbors[n].distance) {
             current.neighbors[n].distance = temp;
             current.neighbors[n].previousNode = current;
-            // this.nextUp.insert(current.neighbors[n]);
+            this.nextUp.insert(current.neighbors[n]);
             this.nextUp.setDistance(current.neighbors[n].getIndex(), current.neighbors[n].distance);
           }
         }
@@ -47,15 +45,9 @@ export default function Dijkstra(grid) {
 
     let nodes = this.nodePath.length;
     this.animatePath("searched", nodes);
-
-    /*
-    for (let node = 0; node < this.nodePath.length; node++) {
-      this.animatePath(this.nodePath[node], "searched");
-    }
-    */
   };
 
-  Dijkstra.prototype.animatePath = function(htmlClass, iterations) {
+  Astar.prototype.animatePath = function(htmlClass, iterations) {
 
     if (iterations === 1) {
       let targetNode = this.target;

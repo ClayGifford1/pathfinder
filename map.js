@@ -1,11 +1,13 @@
 import Node from "./cell.js";
 
-export default class Map {
+export default class Grid {
   constructor(rows, cells) {
     this.rows = rows;
     this.cells = cells;
     this.graph = [];
     this.grid = document.getElementById("grid");
+    this.baseNode = null;
+    this.targetNode = null;
     this.mousePressed = false;
     // this.cellNeighbors = 8;
     this.cellNeighbors = 4;
@@ -21,13 +23,15 @@ export default class Map {
       var row = document.createElement("tr");
 
       for (let y = 0; y < this.cells; y++) {
-        var node = new Node(x, y, this.cells);
+        var node = new Node(x, y, this.rows, this.cells);
 
         if (x === Math.floor(this.rows / 2) && y === Math.floor(this.cells / 4)) {
           node.isBase = true;
+          this.baseNode = node;
         }
         else if (x === Math.floor(this.rows / 2) && y === Math.floor(this.cells / 4 * 3)) {
           node.isTarget = true;
+          this.targetNode = node;
         }
 
         nodes.push(node);

@@ -1,5 +1,6 @@
-import Map from "./map.js";
+import Grid from "./map.js";
 import Dijkstra from "./dijkstra.js";
+import Astar from "./aStar.js";
 
 const nav = document.getElementById("navigation");
 const info = document.getElementById("info");
@@ -15,6 +16,7 @@ const generateGrid = () => {
 
 const initializeEventListeners = () => {
   document.getElementById("Dijkstra search").addEventListener("click", activateDijkstra);
+  document.getElementById("Astar search").addEventListener("click", activateAstar);
   document.getElementById("reset").addEventListener("click", resetGrid);
   window.addEventListener("resize", resetGrid);
 };
@@ -32,10 +34,10 @@ const generateMouseEvents = () => {
         let status = mouseDownStatus();
         if (status) {
 
-          if (baseCellMoving) {
+          if (baseCellMoving && !checkTargetCell(x, y)) {
             this.className = "base";
           }
-          if (targetCellMoving) {
+          if (targetCellMoving && !checkBaseCell(x, y)) {
             this.className = "target";
           }
           if (!baseCellMoving && !targetCellMoving) {
@@ -51,11 +53,14 @@ const generateMouseEvents = () => {
         let status = mouseDownStatus();
         if (status) {
 
-          if (baseCellMoving || targetCellMoving) {
+          if (baseCellMoving && !checkTargetCell(x, y)) {
             this.className = "cell";
             if (checkBaseCell(x, y)) {
               grid.graph[x][y].isBase = false;
             }
+          }
+          if (targetCellMoving && !checkBaseCell(x, y)) {
+            this.className = "cell";
             if (checkTargetCell(x, y)) {
               grid.graph[x][y].isTarget = false;
             }
@@ -83,11 +88,13 @@ const generateMouseEvents = () => {
 
           if (baseCellMoving) {
             grid.graph[x][y].isBase = true;
+            grid.baseNode = this;
             this.className = "base";
             baseCellMoving = false;
           }
           if (targetCellMoving) {
             grid.graph[x][y].isTarget = true;
+            grid.targetNode = this;
             this.className = "target";
             targetCellMoving = false;
           }
@@ -149,10 +156,15 @@ const activateDijkstra = () => {
   testRun.runDijkstra();
 };
 
+const activateAstar = () => {
+  let testRun = new Astar(grid);
+  testRun.runAstar();
+};
+
 const dimensions = calculateGridSize();
 const rows = calculateRows(dimensions);
 const cells = calculateCells(dimensions);
-const grid = new Map(rows, cells);
+const grid = new Grid(rows, cells);
 
 generateGrid();
 initializeEventListeners();

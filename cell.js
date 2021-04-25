@@ -1,11 +1,13 @@
 export default class Node {
-  constructor(row, cell, cells) {
+  constructor(row, cell, rows, cells) {
     this.row = row;
     this.cell = cell;
+    this.rows = rows;
     this.cells = cells;
     this.previousNode = null;
     this.distance = Infinity;
     this.weight = 1;
+    this.aStarDistance = null;
     this.isBase = false;
     this.isTarget = false;
     this.isObstacle = false;
@@ -39,9 +41,5 @@ export default class Node {
 
   getIndex() {
     return ((this.row * this.cells) + this.cell + 1);
-  }
-
-  handleMouseDown() {
-    document.getElementById(this.id).className = "pressed";
   }
 }

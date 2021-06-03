@@ -63,6 +63,18 @@ class Grid extends HtmlGrid {
     this.initializeNodes();
   }
 
+  reset() {
+    alert("being reset");
+    for (let x = 0; x < this.rows; x++) {
+      for (let y = 0; y < this.cols; y++) {
+        this.grid[x][y].revokeStatus();
+        this.grid[x][y].resetValues();
+      }
+    }
+
+    this.initializeNodes();
+  }
+
   handleMouseDown(row, cell) {
     this.mouseStatus = true;
 
@@ -101,6 +113,10 @@ class Grid extends HtmlGrid {
   }
 
   initializeNodes() {
+    this.baseNodeCoordinates.row = Math.floor(this.rows / 2);
+    this.baseNodeCoordinates.cell = Math.floor(this.cols / 4);
+    this.targetNodeCoordinates.row = Math.floor(this.rows / 2);
+    this.targetNodeCoordinates.cell = Math.floor(this.cols / 4 * 3);
     this.grid[this.baseNodeCoordinates.row][this.baseNodeCoordinates.cell].setAsBase();
     this.grid[this.targetNodeCoordinates.row][this.targetNodeCoordinates.cell].setAsTarget();
   }
@@ -448,6 +464,17 @@ class Cell extends HtmlCell {
     this.isTarget = false;
     this.isObject = false;
 
+  }
+
+  resetValues() {
+    this.previousNode = null;
+    this.units = 1;
+    this.weight = 1;
+    this.searchCost = Infinity;
+    this.pathCost = Infinity;
+    this.distanceToTarget = Infinity;
+    this.searchScore = null;
+    this.inSearchSet = false;
   }
 }
 

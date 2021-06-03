@@ -9,8 +9,14 @@ const infoHeight = info.offsetHeight;
 const initializeButtonEvents = () => {
   document.getElementById("Dijkstra search").addEventListener("click", activateDijkstra);
   document.getElementById("aStar search").addEventListener("click", activateAStar);
-  //document.getElementById("reset").addEventListener("click", grid.restore());
-  //window.addEventListener("resize", grid.restore());
+  document.getElementById("reset").addEventListener("click", reload);
+  window.addEventListener("resize", reload);
+  //document.getElementById("reset").addEventListener("click", grid.reset.bind(grid));
+  //window.addEventListener("resize", grid.reset.bind(grid));
+};
+
+const reload = () => {
+  location.reload();
 };
 
 const initializeGridEvents = () => {

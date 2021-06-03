@@ -1,43 +1,50 @@
-export default function MinHeap() {
-  this.heap = [];
+class Node {
+  constructor(key, value) {
+    this.key = key;
+    this.value = value;
+  }
 }
 
-const leftChild = (index) => index * 2 + 1;
-const rightChild = (index) => index * 2 + 2;
-const parent = (index) => Math.floor((index-1) / 2);
-
-MinHeap.prototype.swap = function (indexOne, indexTwo) {
-  const temp = this.heap[indexOne];
-  this.heap[indexOne] = this.heap[indexTwo];
-  this.heap[indexTwo] = temp;
-};
-
-MinHeap.prototype.peek = function() {
-  return this.heap[0];
-};
-
-MinHeap.prototype.insert = function(node) {
-  this.heap.push(node);
-
-  let index = this.heap.length - 1;
-
-  while(index != 0 && this.heap[index].distance < this.heap[parent(index)].distance) {
-    this.swap(index, parent(index));
-    index = parent(index);
+class MinHeap {
+  constructor() {
+    this.heap = [];
   }
 
-  MinHeap.prototype.extractMin = function() {
+  swap(indexOne, indexTwo) {
+    const temp = this.heap[indexOne];
+    this.heap[indexOne] = this.heap[indexTwo];
+    this.heap[indexTwo] = temp;
+  }
+
+  peek() {
+    return this.heap[0].key;
+  }
+
+  insert(key, value) {
+    let node = new Node(key, value);
+
+    this.heap.push(node);
+
+    let index = this.heap.length - 1;
+
+    while (index != 0 && this.heap[index].value <= this.heap[parent(index)].value) {
+      this.swap(index, parent(index));
+      index = parent(index);
+    }
+  }
+
+  extractMin() {
     const root = this.heap.shift();
 
-    this.heap.unshift(this.heap[this.heap.length-1]);
+    this.heap.unshift(this.heap[this.heap.length - 1]);
     this.heap.pop();
 
     this.heapify(0);
 
-    return root;
-  };
+    return root.key;
+  }
 
-  MinHeap.prototype.heapify = function(index) {
+  heapify(index) {
 
     let leftIndex = leftChild(index);
     let rightIndex = rightChild(index);
@@ -45,15 +52,15 @@ MinHeap.prototype.insert = function(node) {
     let reposition = index;
 
     if (reposition != 0) {
-      if (parentIndex >= 0 && this.heap[reposition].distance < this.heap[parentIndex].distance) {
+      if (parentIndex >= 0 && this.heap[reposition].value < this.heap[parentIndex].value) {
         reposition = parentIndex;
       }
     }
-    if (leftIndex < this.heap.length && this.heap[reposition].distance > this.heap[leftIndex].distance) {
+    if (leftIndex < this.heap.length && this.heap[reposition].value > this.heap[leftIndex].value) {
       reposition = leftIndex;
     }
 
-    if (rightIndex < this.heap.length && this.heap[reposition].distance > this.heap[rightIndex].distance) {
+    if (rightIndex < this.heap.length && this.heap[reposition].value > this.heap[rightIndex].value) {
       reposition = rightIndex;
     }
 
@@ -61,19 +68,16 @@ MinHeap.prototype.insert = function(node) {
       this.swap(reposition, index);
       this.heapify(reposition);
     }
-    //if (reposition === index) {
-    //}
-  };
+  }
+}
 
-  MinHeap.prototype.setDistance = function(index, distance) {
-    let heapIndex = 0;
+const leftChild = (index) => index * 2 + 1;
+const rightChild = (index) => index * 2 + 2;
+const parent = (index) => Math.floor((index - 1) / 2);
 
-    for (let n = 0; n < this.heap.length; n++) {
-      if (this.heap[n].getIndex() === index) {
-        this.heap[n].distance = distance;
-        heapIndex = n;
-      }
-    }
-    this.heapify(heapIndex);
-  };
-};
+
+
+
+
+
+export {MinHeap, Node, leftChild, rightChild, parent};

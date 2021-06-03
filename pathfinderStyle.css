@@ -19,6 +19,11 @@ body {
   border: 2px solid black;
 }
 
+#playground {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 td {
   height: 25px;
   width: 25px;
@@ -46,5 +51,5 @@ td {
 }
 
 .pressed {
-  /*background-color: pink;*/
+  background-color: pink;
 }

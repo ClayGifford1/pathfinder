@@ -1,139 +1,43 @@
-import Grid from "./map.js";
-import Dijkstra from "./dijkstra.js";
-import Astar from "./aStar.js";
+import { HtmlGrid, Grid, HtmlCell, Cell } from "./htmlGrid.js";
 
 const nav = document.getElementById("navigation");
 const info = document.getElementById("info");
+const playground = document.getElementById("playground");
 const navHeight = nav.offsetHeight;
 const infoHeight = info.offsetHeight;
-//var mousePressed = false;
-var baseCellMoving = false;
-var targetCellMoving = false;
 
-const generateGrid = () => {
-  grid.buildGrid();
-};
-
-const initializeEventListeners = () => {
+const initializeButtonEvents = () => {
   document.getElementById("Dijkstra search").addEventListener("click", activateDijkstra);
-  document.getElementById("Astar search").addEventListener("click", activateAstar);
-  document.getElementById("reset").addEventListener("click", resetGrid);
-  window.addEventListener("resize", resetGrid);
+  document.getElementById("aStar search").addEventListener("click", activateAStar);
+  //document.getElementById("reset").addEventListener("click", grid.restore());
+  //window.addEventListener("resize", grid.restore());
 };
 
-const generateMouseEvents = () => {
-
-  for (let x = 0; x < grid.rows; x++) {
-    for (let y = 0; y < grid.cells; y++) {
-
-      let nodeID = grid.graph[x][y].id;
-      let node = document.getElementById(nodeID);
-
-      node.addEventListener("mouseenter", function() {
-
-        let status = mouseDownStatus();
-        if (status) {
-
-          if (baseCellMoving && !checkTargetCell(x, y)) {
-            this.className = "base";
-          }
-          if (targetCellMoving && !checkBaseCell(x, y)) {
-            this.className = "target";
-          }
-          if (!baseCellMoving && !targetCellMoving) {
-            if (!checkBaseCell(x, y) && !checkTargetCell(x, y)) {
-              this.className = "pressed";
-            }
-          }
-        }
-      });
-
-      node.addEventListener("mouseleave", function() {
-
-        let status = mouseDownStatus();
-        if (status) {
-
-          if (baseCellMoving && !checkTargetCell(x, y)) {
-            this.className = "cell";
-            if (checkBaseCell(x, y)) {
-              grid.graph[x][y].isBase = false;
-            }
-          }
-          if (targetCellMoving && !checkBaseCell(x, y)) {
-            this.className = "cell";
-            if (checkTargetCell(x, y)) {
-              grid.graph[x][y].isTarget = false;
-            }
-          }
-        }
-      });
-
-      node.addEventListener("mousedown", function() {
-
-        if (checkBaseCell(x, y)) {
-          baseCellMoving = true;
-        }
-        if (checkTargetCell(x, y)) {
-          targetCellMoving = true;
-        }
-        if (!baseCellMoving && !targetCellMoving) {
-          this.className = "pressed";
-        }
-      });
-
-      node.addEventListener("mouseup", function() {
-
-        let status = mouseDownStatus();
-        if (status) {
-
-          if (baseCellMoving) {
-            grid.graph[x][y].isBase = true;
-            grid.baseNode = this;
-            this.className = "base";
-            baseCellMoving = false;
-          }
-          if (targetCellMoving) {
-            grid.graph[x][y].isTarget = true;
-            grid.targetNode = this;
-            this.className = "target";
-            targetCellMoving = false;
-          }
-        }
-      });
+const initializeGridEvents = () => {
+  for (let row = 0; row < rows; row++) {
+    for (let cell = 0; cell < cells; cell++) {
+      grid.grid[row][cell].element.addEventListener("mousedown", function() { handleMouseDown(row, cell); });
+      grid.grid[row][cell].element.addEventListener("mouseup", function() { handleMouseUp(row, cell); });
+      grid.grid[row][cell].element.addEventListener("mouseenter", function() { handleMouseEnter(row, cell); });
+      grid.grid[row][cell].element.addEventListener("mouseleave", function() { handleMouseLeave(row, cell); });
     }
   }
-  grid.grid.addEventListener("mousedown", handleMouseDownGrid);
-  grid.grid.addEventListener("mouseup", handleMouseUpGrid);
 };
 
-const mouseDownStatus = () => {
-  return grid.mousePressed;
+const handleMouseDown = (row, cell) => {
+  grid.handleMouseDown(row, cell);
 };
 
-const checkBaseCell = (x, y) => {
-  return grid.graph[x][y].isBase;
+const handleMouseUp = (row, cell) => {
+  grid.handleMouseUp(row, cell);
 };
 
-const checkTargetCell = (x, y) => {
-  return grid.graph[x][y].isTarget;
+const handleMouseEnter = (row, cell) => {
+  grid.handleMouseEnter(row, cell);
 };
 
-const handleMouseDownGrid = () => {
-  grid.mousePressed = true;
-  //mousePressed = true;
-};
-
-const handleMouseUpGrid = () => {
-  grid.mousePressed = false;
-};
-
-const resetGrid = () => {
-  /*
-  grid.clear();
-  generateGrid();
-  generateMouseEvents();
-  */
-  window.location.reload(false);
+const handleMouseLeave = (row, cell) => {
+  grid.handleMouseLeave(row, cell);
 };
 
 const calculateGridSize = () => {
@@ -152,21 +56,19 @@ const calculateCells = (dimensions) => {
 };
 
 const activateDijkstra = () => {
-  let testRun = new Dijkstra(grid);
-  testRun.runDijkstra();
+  grid.runDijkstraSearch();
 };
 
-const activateAstar = () => {
-  let testRun = new Astar(grid);
-  testRun.runAstar();
+const activateAStar = () => {
+  grid.runAstarSearch();
 };
+
 
 const dimensions = calculateGridSize();
 const rows = calculateRows(dimensions);
 const cells = calculateCells(dimensions);
 const grid = new Grid(rows, cells);
+playground.appendChild(grid.element);
 
-generateGrid();
-initializeEventListeners();
-generateMouseEvents();
-// grid.getNeighbors();
+initializeButtonEvents();
+initializeGridEvents();

@@ -5,6 +5,7 @@ const info = document.getElementById("info");
 const playground = document.getElementById("playground");
 const navHeight = nav.offsetHeight;
 const infoHeight = info.offsetHeight;
+var algoEligible = true;
 
 const initializeButtonEvents = () => {
   document.getElementById("Dijkstra search").addEventListener("click", activateDijkstra);
@@ -31,7 +32,13 @@ const initializeGridEvents = () => {
 };
 
 const handleMouseDown = (row, cell) => {
-  grid.handleMouseDown(row, cell);
+  if (algoEligible) {
+    grid.handleMouseDown(row, cell);
+  }
+  else {
+    let reset = document.getElementById("reset-alert");
+    reset.className = "visible";
+  }
 };
 
 const handleMouseUp = (row, cell) => {
@@ -62,11 +69,25 @@ const calculateCells = (dimensions) => {
 };
 
 const activateDijkstra = () => {
-  grid.runDijkstraSearch();
+  if (algoEligible) {
+    grid.runDijkstraSearch();
+    algoEligible = false;
+  }
+  else {
+    let reset = document.getElementById("reset-alert");
+    reset.className = "visible";
+  }
 };
 
 const activateAStar = () => {
-  grid.runAstarSearch();
+  if (algoEligible) {
+    grid.runAstarSearch();
+    algoEligible = false;
+  }
+  else {
+    let reset = document.getElementById("reset-alert");
+    reset.className = "visible";
+  }
 };
 
 

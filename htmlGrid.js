@@ -1,4 +1,4 @@
-import {MinHeap, Node, leftChild, rightChild, parent} from "./minHeap.js";
+import {MinHeap, Node, leftChild, rightChild, parent} from "./modules/minHeap.js";
 
 class HtmlGrid {
 

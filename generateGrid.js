@@ -3,13 +3,18 @@ import { HtmlGrid, Grid, HtmlCell, Cell } from "./htmlGrid.js";
 const nav = document.getElementById("navigation");
 const info = document.getElementById("info");
 const playground = document.getElementById("playground");
+const alerts = document.getElementById("alerts");
 const navHeight = nav.offsetHeight;
 const infoHeight = info.offsetHeight;
-var algoEligible = true;
+const alertHeight = alerts.offsetHeight;
+var boardActive = true;
+var algoEligible = false;
+var algo = "";
 
 const initializeButtonEvents = () => {
   document.getElementById("Dijkstra search").addEventListener("click", activateDijkstra);
   document.getElementById("aStar search").addEventListener("click", activateAStar);
+  document.getElementById("search").addEventListener("click", runSearch);
   document.getElementById("reset").addEventListener("click", reload);
   window.addEventListener("resize", reload);
   //document.getElementById("reset").addEventListener("click", grid.reset.bind(grid));
@@ -32,7 +37,7 @@ const initializeGridEvents = () => {
 };
 
 const handleMouseDown = (row, cell) => {
-  if (algoEligible) {
+  if (boardActive) {
     grid.handleMouseDown(row, cell);
   }
   else {
@@ -61,13 +66,52 @@ const calculateGridSize = () => {
 };
 
 const calculateRows = (dimensions) => {
-  return Math.floor((dimensions.height - navHeight - infoHeight - 100) / 25);
+  return Math.floor((dimensions.height - navHeight - infoHeight - alertHeight - 100) / 25);
 };
 
 const calculateCells = (dimensions) => {
   return Math.floor(dimensions.width / 25);
 };
 
+const runSearch = () => {
+  if (boardActive) {
+    if (algoEligible) {
+      if (algo == "dijkstra") {
+        grid.runDijkstraSearch();
+        algoEligible = false;
+      }
+      if (algo == "aStar") {
+        grid.runAstarSearch();
+        algoEligible = false;
+      }
+      boardActive = false;
+    }
+    else {
+      let runError = document.getElementById("run-alert");
+      runError.className = "visible";    
+    } 
+  }
+  else {
+    let reset = document.getElementById("reset-alert");
+    reset.className = "visible";
+  }
+}
+
+const activateDijkstra = () => {
+  algo = "dijkstra";
+  algoEligible = true;
+  let runError = document.getElementById("run-alert");
+  runError.className = "invisible";  
+}
+
+const activateAStar = () => {
+  algo = "aStar";
+  algoEligible = true;
+  let runError = document.getElementById("run-alert");
+  runError.className = "invisible";  
+}
+
+/*
 const activateDijkstra = () => {
   if (algoEligible) {
     grid.runDijkstraSearch();
@@ -89,7 +133,7 @@ const activateAStar = () => {
     reset.className = "visible";
   }
 };
-
+*/
 
 const dimensions = calculateGridSize();
 const rows = calculateRows(dimensions);

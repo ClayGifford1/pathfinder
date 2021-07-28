@@ -3,10 +3,12 @@ import { HtmlGrid, Grid, HtmlCell, Cell } from "./htmlGrid.js";
 const nav = document.getElementById("navigation");
 const info = document.getElementById("info");
 const playground = document.getElementById("playground");
-const alerts = document.getElementById("alerts");
+//const alerts = document.getElementById("alerts");
+//const rules = document.getElementById("rules");
 const navHeight = nav.offsetHeight;
 const infoHeight = info.offsetHeight;
-const alertHeight = alerts.offsetHeight;
+//const alertHeight = alerts.offsetHeight;
+//const rulesHeight = rules.offsetHeight;
 var boardActive = true;
 var algoEligible = false;
 var algo = "";
@@ -66,11 +68,11 @@ const calculateGridSize = () => {
 };
 
 const calculateRows = (dimensions) => {
-  return Math.floor((dimensions.height - navHeight - infoHeight - alertHeight - 100) / 25);
+  return Math.floor((dimensions.height - navHeight - infoHeight - 100) / 35);
 };
 
 const calculateCells = (dimensions) => {
-  return Math.floor(dimensions.width / 25);
+  return Math.floor(dimensions.width / 35);
 };
 
 const runSearch = () => {

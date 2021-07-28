@@ -99,12 +99,16 @@ class Grid extends HtmlGrid {
   }
 
   handleMouseEnter(row, cell) {
-    if(this.mouseStatus && this.baseMoving && !this.grid[row][cell].isTarget) {
+    if(this.mouseStatus && this.baseMoving && !this.grid[row][cell].isTarget && !this.grid[row][cell].isObject) {
       this.setBaseNode(row, cell);
     }
 
-    if(this.mouseStatus && this.targetMoving && !this.grid[row][cell].isBase) {
+    if(this.mouseStatus && this.targetMoving && !this.grid[row][cell].isBase && !this.grid[row][cell].isObject) {
       this.setTargetNode(row, cell);
+    }
+
+    if(this.mouseStatus && !this.targetMoving && !this.baseMoving) {
+      this.grid[row][cell].setAsObject();
     }
   }
 
@@ -138,7 +142,7 @@ class Grid extends HtmlGrid {
   }
 
   validateNeighbor(row, cell) {
-    return (row >= 0 && row < this.rows && cell >= 0 && cell < this.cols);
+    return (row >= 0 && row < this.rows && cell >= 0 && cell < this.cols && !this.grid[row][cell].isObject);
   }
 
   getNeighbors(row, cell) {
@@ -416,7 +420,12 @@ class Cell extends HtmlCell {
     this.isBase = true;
     this.type = "base";
     this.refreshHtmlClass();
-
+    /*
+    let rover = document.createElement("img");
+    rover.src = "./Assets/img/rover-vector.png";
+    rover.className = "rover";
+    this.element.appendChild(rover);
+    */
     this.isTarget = false;
     this.isObject = false;
   }

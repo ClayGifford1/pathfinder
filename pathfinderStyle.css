@@ -1,5 +1,7 @@
 body {
-  padding-top: 70px;
+  padding-top: 0px;
+  margin-top: 0px;
+  background-color: black;
 }
 
 #navigation {
@@ -70,4 +72,8 @@ td {
 
 .rules {
   height: 50%;
+}
+
+h1, p {
+  color: white;
 }

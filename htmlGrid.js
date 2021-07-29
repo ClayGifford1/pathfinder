@@ -107,7 +107,7 @@ class Grid extends HtmlGrid {
       this.setTargetNode(row, cell);
     }
 
-    if(this.mouseStatus && !this.targetMoving && !this.baseMoving) {
+    if(this.mouseStatus && !this.targetMoving && !this.baseMoving && !this.grid[row][cell].isBase && !this.grid[row][cell].isTarget) {
       this.grid[row][cell].setAsObject();
     }
   }
